@@ -1,6 +1,8 @@
 package Main;
 
+import Main.GameObjects.Entity.Player;
 import Main.Utils.KeyHandler;
+import Main.Utils.MapHandler.MapHandler;
 import Main.Utils.MouseHandler;
 
 import javax.swing.*;
@@ -12,13 +14,18 @@ public class GamePanel extends JPanel implements Runnable {
     private Thread thread;
     private JFrame frame;
     public final int FPS = 60;
-    private int sWidth = 1200; // short for screen Width
-    private int sHeight = 800; // short for screen Height
+    public int mRows = 9, mCols = 16;
+    public int tileSize = 48;
+    private int sWidth = mCols * tileSize; // short for screen Width
+    private int sHeight = mRows * tileSize; // short for screen Height
     private String title = "Game Window";
 
     // Utils
     KeyHandler kh;
     MouseHandler mh;
+    public MapHandler mapH;
+
+    public Player p;
 
 
     public GamePanel(){
@@ -29,6 +36,9 @@ public class GamePanel extends JPanel implements Runnable {
         // Initializing some Variables
         kh = new KeyHandler(this);
         mh = new MouseHandler(this);
+        mapH = new MapHandler(this);
+
+        p = new Player(this);
 
         // Initializing JPanel i.e. this
         setPreferredSize(new Dimension(sWidth, sHeight));
@@ -51,6 +61,7 @@ public class GamePanel extends JPanel implements Runnable {
         frame.setVisible(true);
 
         // Starting
+        mapH.loadMap();
         thread = new Thread(this);
         thread.start();
     }
@@ -71,7 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void update(){
-
+        p.update();
     }
 
     @Override
@@ -79,7 +90,8 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(graphics);
         Graphics2D g = (Graphics2D) graphics; // using graphics2d other than graphics
 
-
+        mapH.draw(g);
+        p.draw(g);
 
         g.dispose();
     }

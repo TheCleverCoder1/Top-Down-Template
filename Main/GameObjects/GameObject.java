@@ -4,7 +4,8 @@ import Main.GamePanel;
 
 public class GameObject {
     protected GamePanel gp;
-    protected float x, y;
+    public float x;
+    public float y;
 
     public GameObject(float x, float y, GamePanel gp){
         this.x = x; this.y = y; this.gp = gp;

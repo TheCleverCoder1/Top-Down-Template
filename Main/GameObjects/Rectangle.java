@@ -3,7 +3,8 @@ package Main.GameObjects;
 import Main.GamePanel;
 
 public class Rectangle extends GameObject{
-    protected float width, height;
+    public float width;
+    public float height;
 
     public Rectangle(float x, float y, GamePanel gp, float width, float height) {
         super(x, y, gp); this.width = width; this.height = height;
